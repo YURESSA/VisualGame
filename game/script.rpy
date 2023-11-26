@@ -12,6 +12,8 @@ define AreaPrisoner = Character('Заключённый', color='#A9A9A9')
 #Персонажи
 image hero = "characters/Main.png"
 image mayor = "characters/mayor.png"
+image mayorWithHand = "characters/mayorWithHand.png"
+image mayorSurprise= "characters/mayorSurprise.png"
 
 image piter = "characters/Piter.png"
 image piterSad = "characters/PiterSad.png"
@@ -22,10 +24,20 @@ image piterLaugh = "characters/PiterLaugh.png"
 
 image mark = "characters/Mark.png"
 image markWithBook = "characters/MarkWithBook.png"
+image markShiny = "characters/MarkShiny.png"
+image markSurprise = "characters/MarkSurprise.png"
+image markSmile = "characters/MarkSmile.png"
+
 image inkognito = "characters/inkognito.png"
 image NoName = "characters/NoName.png"
 image NoName1 = "characters/NoName.png"
+
 image WebSofia = "characters/Sofia.png"
+image WebSofiaForMenu = "characters/SofiaForMenu.png"
+image WebSofiaSmile = "characters/SofiaSmile.png"
+image WebSofiaSurprise = "characters/SofiaSurprise.png"
+image WebSofiaWithPhone = "characters/SofiaWithPhone.png"
+
 image Prisoner = "characters/Prisoner.png"
 
 #Комната персонажа
@@ -58,7 +70,12 @@ image result = "MarkTasks/result.png"
 image oldArea = "oldArea/oldArea.jpg"
 
 #Web район
-image WebArea = "WebArea/WebCity.png"
+image WebCity = "SofiaTask/WebCity.png"
+image Task = "SofiaTask/Task.png"
+image CompleteTask = "SofiaTask/CompleteTask.png"
+
+image mayorOffice = "MayorTask/mayorOffice.png"
+image mayorTask = "MayorTask/Task.png"
 
 define greenCount = 0
 define oldArea = 0
@@ -78,6 +95,9 @@ define audio.fallOfHeap = "fallOfheap.mp3"
 define audio.getKey = "getKey.mp3"
 define audio.startSound = "startSound.mp3"
 define audio.musicSpeed = "musicSpeed.mp3"
+define audio.musicNormal = "musicNormal.mp3"
+
+
 # Игра начинается здесь:
 label start:
     play music startSound
@@ -139,8 +159,15 @@ label virtualWord:
     были участки, которые были закомментированы, а где-то здания, которые держались на костылях."
     with fade
     scene mainBuilding
-    show piter
-    show mayor at right
+    show piter at right
+
+    show WebSofiaForMenu at left
+    show mark:
+        xalign 0.15
+        yalign 0.9
+    show mayorWithHand:
+        xalign 0.6
+        yalign 0.9
     with dissolve
     MrMayor "Знакомься это представители наших районов."
     with dissolve
@@ -150,17 +177,26 @@ label virtualWord:
             GameDev и ему срочно нужно дописать свой проект. Я думаю по пути он тебе
             всё расскажет, а мне и остальным пора бежать."
     hide mayor
+    scene mainBuilding
+    show piter:
+        xalign 0.6
+        yalign 0.99
     with dissolve
     MrPiter "Привет! Как ты мог услышать я Питер. Я отвечаю за игровой GameDev
-            район."
-    show piterSad
+            район. "
+    hide piter
+    show piterSad:
+        xalign 0.6
+        yalign 0.99
     extend "В общем проблема такая. Скоро у меня срок сдачи проекта, а мне ужас
             как не хватает рук чтобы доделать детскую площадку."
     with dissolve
     mainСharacterr " Я бы с удовольствие помог, но я не умею строить площадки, да я
                     и не настолько физически сильный, так что вынужден отказать."
     hide piterSad
-    show piterLaugh
+    show piterLaugh:
+        xalign 0.6
+        yalign 0.99
     MrPiter "Хах. Строить?! {w=1}Таким уже очень давно никто не занимается, откуда ты
             вообще такой взялся, что у вас там строят. {w=1}У нас не строят, у нас пишут всё в
             этом городе, начиная от зданий, заканчивая продуктами. Ты надеюсь слышал
@@ -175,6 +211,8 @@ label virtualWord:
 
 
 label ifDontKnow:
+    hide piterLaugh
+    show piter
     with dissolve
     MrPiter "Это не просто один из множества языков. Вот посмотри туда.{w=1}
      Видишь как это величественно и красиво? А это написал один из лучших
@@ -191,6 +229,8 @@ label ifDontKnow:
 
 
 label ifKnow:
+    hide piterLaugh
+    show piter
     with dissolve
 
     MrPiter "О, а ты молодец, что интересуешься этим, тогда ты с легкостью справишься с моим заданием."
@@ -203,7 +243,8 @@ label ifKnow:
 label helpPiter:
     with dissolve
     mainСharacterr "А как выбраться отсюда?"
-    with dissolve
+    hide piter
+    show piterSurprise
     MrPiter "Что? {w=1}Откуда отсюда?"
     with dissolve
     mainСharacterr "Да я просто пошутил. Ну так с чего начнём?"
@@ -224,7 +265,6 @@ label helpPiter:
     stop music fadeout 1
     play music musicSpeed
     play sound gameZone
-    with dissolve
     show piter at right
     MrPiter "Вау! У тебя отлично получилось. А это ведь ты всеголишь первый проект,
             тебя ждёт отличное будущее в нашем мире.{w=1} Пошли в главный офис нашего
@@ -248,18 +288,19 @@ label checkSecretRoom:
     MrPiter "Да, конечно. Могу рассказать про все отделы."
     mainСharacterr"А можно ли без тебя? Просто боюсь, что работники могут сказать не то, что
     хотят при виде начальника."
+    hide piter
+    show piterLaugh at right
     MrPiter "Хах, да, хорошо. Тогда жду у себя в кабинете."
     with fade
     scene secretRoom
     mainСharacterr "Так нужно быстро осмотреть комнату. Может тут будут какие-то подсказки как выбраться отсюда."
-    MrPython "Что будем делать с нашим заключённым? Я считаю, что его нужно убарть ведь он единственный знает, что из нашего мира есть выход. Что думаешь ты?"
+    MrPython "Что будем делать с нашим заключённым? Я считаю, что его нужно убрать ведь он единственный знает, что из нашего мира есть выход. Что думаешь ты?"
     mainСharacterr "Так значит способ всё же есть, но они скрывают его. Мне нужно срочно его найти. Но сейчас мне надо в офис к Питеру."
     jump stayWithPiter
     return
 
 label stayWithPiter:
     with fade
-    with dissolve
     scene PitersOffice
     show piter at left
     MrPiter "Ну что, как тебе пробный рабочий день у нас?"
@@ -270,39 +311,45 @@ label stayWithPiter:
     mainСharacterr "Вау, как круто. А есть ли ещё кому помочь чтобы больше узнать о возможностях Python?"
     MrPiter "Питер - Хм, сейчас спрошу.{w=2}"
     play sound enterMessage
-    extend " Можешь пойти в Data район, там сейчас Марку не помешала бы помощь.  Вот тебе адрес его офиса, он тебя встретит"
+    extend " Можешь пойти в Data район, там сейчас Марку не помешала бы помощь.  Я дам тебе адрес его офиса, он тебя встретит"
     jump MarkTask
     return
 
 label MarkTask:
+    play music musicNormal
     with fade
     scene dataCity
     with dissolve
     show mark at right
     DataMark "Привет, ты же [mainPerson]?"
     mainСharacterr "Привет, да. Я попросил Питера узнать, есть ли ещё какая-то работа, чтобы узнать о возможностях Python."
+    hide mark
+    show markSmile at right
     DataMark " Да, знаю, знаю. Слышал ты  успешно справился с работой Питера. Если и дальше будешь так успешен во всех наших района,
-    то есть большая вероятность попасть на работу в главный офис нашего города.{w} Ты ведь наверняка его видел, э
-    то офис к которому идут провода от всех районов города."
+    то есть большая вероятность попасть на работу в главный офис нашего города."
+    DataMark "Ты ведь наверняка его видел, это офис к которому идут провода от всех районов города."
     mainСharacterr "Звучит здорово. Ну так давай тогда не будем медлить, какая работа для меня тут есть?"
     DataMark "Cмотри, мой район занимается анализом различных данных, начиная от погодных и финансовых, заканчивая данными об успешности детского образования. В общем анализом любых данных."
     DataMark "Собственно мне бы не помешала помощь с анализом данных успеваемости моих сотрудников. Да, это довольно трудное задание, но раз ты так легко справился с задание у Питера, то возможно справишься и с этим."
+    hide makrSmile
     show markWithBook at right
     DataMark "Вот тебе вся нужная документация и книги с помощью которых ты можешь изучить как делать нашу работу. Если справишься сам, то я обязательно замолвлю за тебя словечко."
-    mainСharacterr "Ну попробую. {w}Но можно сперва вопрос, что это за заброшенные здания там впереди?"
+    mainСharacterr "Ну, попробую. {w}Но можно сперва вопрос, что это за заброшенные здания там впереди?"
     with dissolve
     scene oldArea
-    show mark at left
+    show markShiny at left
     DataMark "Не важно, это заброшенный район, там нет никого, да и вообще скоро мы его удалим, все равно от него одни проблемы. Давай меньше вопросов и скорее приступай к работе."
     with dissolve
     scene dataCity
     "Хм, он явно что-то пытался скрыть, надо будет сходить туда, а пока что нужно разобраться как это делать, чтобы увеличить свои шансы на попадание в главный офис."
     with dissolve
     scene time
+    stop music fadeout 1
     play music writeCode
     "какое-то время спустя..."
     with fade
     stop music fadeout 1
+    play music musicNormal
     scene try
     mainСharacterr "Так, ну вроде должно сработать."
     with dissolve
@@ -310,9 +357,11 @@ label MarkTask:
     play sound sucess
     mainСharacterr "Вау, у меня получилось. Это даже оказалось легче чем я думал."
     with dissolve
-    show mark at right
+    show markSmile at right
     DataMark "Ну что, не сделал? Так и знал, что тебе перехвалили..."
     mainСharacterr "Нет, вот, у меня всё готово!"
+    hide  markSmile
+    show markSurprise at right
     DataMark "Ого, да ты и вправду похоже гений. Сейчас я напишу Софии, чтобы она тоже дала тебе какую-то работу. Если ты справишься и с ней, то считай, что ты уже получил своё место в главном офисе."
     jump choices
     return
@@ -359,47 +408,61 @@ label checkOldArea:
     return
 
 label SofiaTask:
+    play music startSound
     with fade
-    scene WebArea
-    with dissolve
+    scene WebCity
     show WebSofia
     mainСharacterr "Привет. Я слышал у тебя есть работа для меня."
     Sofia "Привет, есть. В общем в этом районе мы делаем различные WEB мероприятия. Но в нашем новом проекте завёлся один халтурщик, который ужас как плохо всё сделал. Мы как раз рядом, вот..."
-    #картинка
     mainСharacterr "По моему тут всё шикарно или я что-то не понимаю?"
     Sofia "Это Front мы его заказываем из другой долины. А вот Back делаем мы и пошли посмотрим что он тут сделал."
-    #картинка
+    scene Task
     mainСharacterr "Да, он явно не старался. Ну ладно, давай книги или объясни как делать и я сделаю."
+    hide WebSofia
+    show WebSofiaSmile at right
     Sofia "Нет, мне рассказали что ты уже сделал и куда метишь. Так что делай всё сам, а я побежала, пока мои ещё чего не испортили."
     with dissolve
     play music writeCode
     scene time
     "какое-то время спустя..."
     stop music fadeout 1
-    #картинка
+    play music startSound
+    with fade
+    scene CompleteTask
+
     play sound gameZone
     mainСharacterr "Ну вот другое дело, у меня явно получилось исправить тот кошмар."
-    Sofia "Ого, ты сам это сделал?! Это просто снос фляги, ты реально гений. Сейчас я напишу мэру и можешь идти в главный офис."
-    Sofia "Всё, можешь идти он будет ждать тебя у входа в офис."
+    show WebSofiaSurprise at right
+    Sofia "Ого, ты сам это сделал?! Это просто снос головы, ты реально гений. Сейчас я напишу мэру и можешь идти в главный офис."
+    hide WebSofiaSurprise
+    show WebSofiaWithPhone at right
+    Sofia "{w=2}Всё, можешь идти он будет ждать тебя у входа в офис."
     jump Ending
     return
 
 label Ending:
     with fade
     scene mainBuilding
-    show mayor at right
+    show mayorWithHand at right
     MrMayor "Приветствую тебя наш юный гений. Очень много слышал о твои результатах."
     mainСharacterr "Спасибо большое. Я очень старался, особенно после того как узнал, что можно попасть к вам в главный офис."
     MrMayor "Ну ты ещё не попал. Но перед тем как я расскажу, что тебе нужно сделать пошли ко мне в кабинет."
-    #картинка
+    with fade
+    scene mayorOffice
+    show mayor at right
     MrMayor " Так, ну для начала давай я тебе расскажу чем мы тут занимаемся. Как ты мог видеть мы центральное звено всех офисов.
     Мы собираем и анализируем всю информацию от районов."
     play sound fallOfHeap
     "Звук падение чего-то с потолка в кабинете мэра."
+    hide mayor
+    show mayorSurprise at right
     mainСharacterr "Что это было?"
     MrMayor "Не обращай внимание. Просто там выше служебный этаж лифта и прочего оборудования, видимо что-то упало просто."
+    hide mayorSurprise
+    show mayor at right
     MrMayor "Ну, а также помогаем районам с их проектами, а также с их проблемами. Собственно твоя задача будет довольно проста."
-    #картинка
+    with fade
+    scene mayorTask
     MrMayor "Видишь вон там заброшенный район?"
     MrMayor "Тебе нужно его просто удалить не оставив ни следа от него. Я думаю ты справишься если мне не наврали о тебе. {w}
     А я пока что уйду на обеденный перерыв, можешь садиться за мой стол и приступать к работе."
