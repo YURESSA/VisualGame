@@ -1,6 +1,6 @@
 ## Black Swan
 
-[Последний релиз](https://github.com/YURESSA/VisualGame/releases/tag/v1.5)
+[Последний релиз](https://disk.yandex.ru/d/TjxcnKp9dqeN9w)
 
 ### Визуальная новелла
 
