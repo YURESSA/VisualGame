@@ -29,7 +29,7 @@ define config.check_conflicting_properties = True
 define gui.accent_color = '#0099cc'
 
 ## Цвет, используемый в текстовой кнопке, когда она не выбрана и не наведена.
-define gui.idle_color = '#888888'
+define gui.idle_color = '#ffffff'
 
 ## Small_color используется в маленьком тексте, который должен быть ярче/темнее,
 ## для того, чтобы выделяться.
@@ -92,7 +92,7 @@ define gui.title_text_size = 75
 define gui.main_menu_background = "gui/main_menu.png"
 define gui.game_menu_background = "gui/game_menu.png"
 
-
+define config.main_menu_music = "gui/mainMenuSound.mp3"
 ## Диалог ######################################################################
 ##
 ## Эти переменные контролируют, как диалог появляется на отдельной строчке.

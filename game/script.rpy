@@ -48,11 +48,12 @@ image notificationFromMrPython = "room/MrPython.png"
 image teleportation = "room/teleportation.png"
 
 #Виртуальный мир
-image gates = "virtualWorld/gates.jpg"
-image city = "virtualWorld/city.jpg"
+image gates = "virtualWorld/gates.png"
+image city = "virtualWorld/city.png"
 image mainBuilding = "virtualWorld/mainBuilding.jpg"
 image work = "PiterTask/work.png"
 image completeWork = "PiterTask/CompleteWork.png"
+image GameDev = "PiterTask/GameDev.png"
 image office = "PiterTask/office.png"
 
 #Секретная комната
@@ -67,7 +68,9 @@ image try = "MarkTasks/Try.png"
 image result = "MarkTasks/result.png"
 
 #Старый район
-image oldArea = "oldArea/oldArea.jpg"
+image oldArea = "oldArea/oldArea.png"
+image Punch = "oldArea/Punch.png"
+image oldHouse = "oldArea/oldHouse.png"
 
 #Web район
 image WebCity = "SofiaTask/WebCity.png"
@@ -76,6 +79,22 @@ image CompleteTask = "SofiaTask/CompleteTask.png"
 
 image mayorOffice = "MayorTask/mayorOffice.png"
 image mayorTask = "MayorTask/Task.png"
+image completeTask = "MayorTask/completeTask.png"
+image atTheTable = "MayorTask/atTheTable.png"
+
+#Prisiner Task
+image Jail = "PrisonerTasks/Jail.png"
+image WithoutHandcuffs = "PrisonerTasks/WithoutHandcuffs.png"
+image EmptyOffice = "PrisonerTasks/EmptyOffice.png"
+image Ladder = "PrisonerTasks/Ladder.png"
+image MainHeroWithPrisoner = "PrisonerTasks/MainHeroWithPrisoner.png"
+image Portal = "PrisonerTasks/portal.png"
+image SaveFromHouse = "PrisonerTasks/SaveFromHouse.png"
+image SaveSolo = "PrisonerTasks/SaveSolo.png"
+image SaveWithPeople = "PrisonerTasks/SaveWithpeople.png"
+image teleport = "PrisonerTasks/teleport.png"
+image WithoutHandcuffs = "PrisonerTasks/WithoutHandcuffs.png"
+image MainHeroWithPrisoner = "PrisonerTasks/MainHeroWithPrisoner.png"
 
 define greenCount = 0
 define oldArea = 0
@@ -93,10 +112,14 @@ define audio.walkOldArea = "walkOldArea.mp3"
 define audio.catch = "catch.mp3"
 define audio.fallOfHeap = "fallOfheap.mp3"
 define audio.getKey = "getKey.mp3"
+define audio.walkToNextFloor = "walkToNextFloor.mp3"
 define audio.startSound = "startSound.mp3"
 define audio.musicSpeed = "musicSpeed.mp3"
 define audio.musicNormal = "musicNormal.mp3"
-
+define audio.FreePrisoner = "FreePrisoner.mp3"
+define audio.sit = "sit.mp3"
+define redRoom = "redRoom.mp3"
+define oldMusic = "oldArea.mp3"
 
 # Игра начинается здесь:
 label start:
@@ -154,8 +177,8 @@ label virtualWord:
     hide hero
     with fade
     scene city
-    "Зайдя в город [mainPerson] увидел необычайно красивый, но странный город. Всё  в
-    нем говорило о том что этот город был написан каким-то разработчиком, где-то
+    "Зайдя в город, [mainPerson] увидел необычайно красивый, но странный город. Всё  в
+    нем говорило о том, что этот город был написан каким-то разработчиком. Где-то
     были участки, которые были закомментированы, а где-то здания, которые держались на костылях."
     with fade
     scene mainBuilding
@@ -177,13 +200,12 @@ label virtualWord:
             GameDev и ему срочно нужно дописать свой проект. Я думаю по пути он тебе
             всё расскажет, а мне и остальным пора бежать."
     hide mayor
-    scene mainBuilding
+    scene GameDev
     show piter:
         xalign 0.6
         yalign 0.99
     with dissolve
-    MrPiter "Привет! Как ты мог услышать я Питер. Я отвечаю за игровой GameDev
-            район. "
+    MrPiter "Привет! Как ты мог услышать я Питер. Я отвечаю за GameDev район."
     hide piter
     show piterSad:
         xalign 0.6
@@ -266,14 +288,14 @@ label helpPiter:
     play music musicSpeed
     play sound gameZone
     show piter at right
-    MrPiter "Вау! У тебя отлично получилось. А это ведь ты всеголишь первый проект,
-            тебя ждёт отличное будущее в нашем мире.{w=1} Пошли в главный офис нашего
+    MrPiter "Вау! У тебя отлично получилось. А ведь это твой первый проект!
+            Тебя ждёт отличное будущее в нашем мире.{w=1} Пошли в главный офис нашего
             района, нужно отчитаться о проделанной работе."
     scene office
     show piter at right
-    MrPiter "Ну вот и пришли, тут ты будешь работать если выберешь жить в нашем районе."
+    MrPiter "Ну вот и пришли, тут ты будешь работать, если выберешь жить в нашем районе."
     mainСharacterr "А что это за кабинет куда вход строго запрещён?"
-    MrPiter "Эм, это не важно пошли скорее дальше."
+    MrPiter "Эм, это не важно... {w=1} Пошли скорее дальше."
     menu:
         "Пойти дальше с Питером":
             jump stayWithPiter
@@ -282,10 +304,11 @@ label helpPiter:
     return
 
 label checkSecretRoom:
+    play music redRoom
     $ greenCount = 1
     $ secretRoom = 1
-    mainСharacterr " Ой, а можно я поговорю с другими сотрудниками, чтобы лучше узнать потенциальное место работы?"
-    MrPiter "Да, конечно. Могу рассказать про все отделы."
+    mainСharacterr "Ой, а можно я поговорю с другими сотрудниками, чтобы лучше узнать потенциальное место работы?"
+    MrPiter "Да, конечно. Могу рассказать тебе про все отделы."
     mainСharacterr"А можно ли без тебя? Просто боюсь, что работники могут сказать не то, что
     хотят при виде начальника."
     hide piter
@@ -294,12 +317,14 @@ label checkSecretRoom:
     with fade
     scene secretRoom
     mainСharacterr "Так нужно быстро осмотреть комнату. Может тут будут какие-то подсказки как выбраться отсюда."
-    MrPython "Что будем делать с нашим заключённым? Я считаю, что его нужно убрать ведь он единственный знает, что из нашего мира есть выход. Что думаешь ты?"
+    MrPython "Что будем делать с нашим заключённым? Я считаю, что его нужно убрать ведь он единственный, кто знает, что из нашего мира есть выход. Что думаешь ты?"
     mainСharacterr "Так значит способ всё же есть, но они скрывают его. Мне нужно срочно его найти. Но сейчас мне надо в офис к Питеру."
     jump stayWithPiter
+    stop music fadeout 1
     return
 
 label stayWithPiter:
+    play music startSound
     with fade
     scene PitersOffice
     show piter at left
@@ -309,9 +334,9 @@ label stayWithPiter:
     которое можно реализовать на питоне. Но на самом деле на питоне можно сделать даже больше чем у нас районов.
     Просто мы пока что развиваемся, из-за чего у нас и нет представителей всех направлений."
     mainСharacterr "Вау, как круто. А есть ли ещё кому помочь чтобы больше узнать о возможностях Python?"
-    MrPiter "Питер - Хм, сейчас спрошу.{w=2}"
+    MrPiter "Хм, сейчас спрошу.{w=2}"
     play sound enterMessage
-    extend " Можешь пойти в Data район, там сейчас Марку не помешала бы помощь.  Я дам тебе адрес его офиса, он тебя встретит"
+    extend "Можешь пойти в Data район, там сейчас Марку не помешала бы помощь. Я дам тебе адрес его офиса, он тебя встретит."
     jump MarkTask
     return
 
@@ -325,15 +350,15 @@ label MarkTask:
     mainСharacterr "Привет, да. Я попросил Питера узнать, есть ли ещё какая-то работа, чтобы узнать о возможностях Python."
     hide mark
     show markSmile at right
-    DataMark " Да, знаю, знаю. Слышал ты  успешно справился с работой Питера. Если и дальше будешь так успешен во всех наших района,
+    DataMark " Да, знаю, знаю. Слышал ты успешно справился с работой Питера. Если и дальше будешь так успешен во всех наших районах,
     то есть большая вероятность попасть на работу в главный офис нашего города."
-    DataMark "Ты ведь наверняка его видел, это офис к которому идут провода от всех районов города."
+    DataMark "Ты ведь наверняка его видел, это офис, к которому идут провода от всех районов города."
     mainСharacterr "Звучит здорово. Ну так давай тогда не будем медлить, какая работа для меня тут есть?"
-    DataMark "Cмотри, мой район занимается анализом различных данных, начиная от погодных и финансовых, заканчивая данными об успешности детского образования. В общем анализом любых данных."
+    DataMark "Ну смотри, мой район занимается анализом различных данных, начиная от погодных и финансовых, заканчивая данными об успешности детского образования. В общем анализом любых данных."
     DataMark "Собственно мне бы не помешала помощь с анализом данных успеваемости моих сотрудников. Да, это довольно трудное задание, но раз ты так легко справился с задание у Питера, то возможно справишься и с этим."
     hide makrSmile
     show markWithBook at right
-    DataMark "Вот тебе вся нужная документация и книги с помощью которых ты можешь изучить как делать нашу работу. Если справишься сам, то я обязательно замолвлю за тебя словечко."
+    DataMark "Вот тебе вся нужная документация и книги, с помощью которых ты сможешь изучить как делать нашу работу. Если справишься сам, то я обязательно замолвлю за тебя словечко."
     mainСharacterr "Ну, попробую. {w}Но можно сперва вопрос, что это за заброшенные здания там впереди?"
     with dissolve
     scene oldArea
@@ -383,35 +408,43 @@ label checkOldArea:
     $ oldArea = 1
     with fade
     scene oldArea
-    mainСharacterr "М-да и зачем я сюда пришёл, похоже тут и вправду ничего нет. Нужно идти обратно."
+    mainСharacterr "М-да, и зачем я сюда пришёл, похоже тут и вправду ничего нет. Нужно идти обратно."
     stop music fadeout 1
+    play music oldMusic
+    with fade
+    scene Punch
+    play sound catch
+    mainСharacterr "Чт-то происходит?"
+    scene oldHouse
     with dissolve
     show inkognito
-    play sound catch
     AreaInkognito "Ты кто такой и что тут забыл?"
-    mainСharacterr "Я... Я [mainPerson] я и сам не знаю как сюда попал, я сидел дома, а потом..."
+    mainСharacterr "Я... Я [mainPerson] я и сам не знаю как сюда попал, я сидел дома, а потом..."
     AreaInkognito "Что?! Ты хочешь сказать что ты ещё один?"
     mainСharacterr " Ещё один кто?"
     AreaInkognito "Ещё один из тех, кто каким-то образом попал в этот виртуальный мир?"
+    with dissolve
     show NoName at right
+    "{w=1}"
+    with dissolve
     show NoName1 at left
     AreaInkognito "Нет... Мы находимся тут всё лето. Мы искали куда можно поступить, проклинали тех, кто решил,
     что люди только окончившие школу могут выбрать кем быть. Как вдруг нам пришло сообщение..."
     mainСharacterr "cообщение от какого-то Mr.Python?"
     AreaInkognito "Да. После чего мы и попали сюда. Спустя какое-то время я узнал, что мэр держит кого-то взаперти..."
     AreaInkognito "Я надеялся, что возможно он мне сможет помочь, но я изучал только Pascal и ничего не хотел учить больше из-за чего я
-    стал отбросом общества и мне пришлось убежать в этот заброшенный район."
-    mainСharacterr "Я могу помочь нам всем. Если я сейчас успешно выполню 3 задание у Софии, то смогу попасть на работу в главный офис. Не знаешь где именно его держат?"
+    стал отбросом общества, и мне пришлось убежать в этот заброшенный район."
+    mainСharacterr "Я могу помочь нам всем. Если я сейчас успешно выполню третье задание у Софии, то смогу попасть на работу в главный офис. Не знаешь где именно его держат?"
     AreaInkognito "Есть слухи, что он находиться на самом верхнем этаже офиса, над этажом мэра."
     mainСharacterr "Тогда я скорее пойду к Софии, если я узнаю как выбраться, то обязательно приду спасти вас!"
     jump SofiaTask
-    return
 
 label SofiaTask:
     play music startSound
     with fade
     scene WebCity
-    show WebSofia
+    with dissolve
+    show WebSofiaForMenu
     mainСharacterr "Привет. Я слышал у тебя есть работа для меня."
     Sofia "Привет, есть. В общем в этом районе мы делаем различные WEB мероприятия. Но в нашем новом проекте завёлся один халтурщик, который ужас как плохо всё сделал. Мы как раз рядом, вот..."
     mainСharacterr "По моему тут всё шикарно или я что-то не понимаю?"
@@ -419,6 +452,7 @@ label SofiaTask:
     scene Task
     mainСharacterr "Да, он явно не старался. Ну ладно, давай книги или объясни как делать и я сделаю."
     hide WebSofia
+    with dissolve
     show WebSofiaSmile at right
     Sofia "Нет, мне рассказали что ты уже сделал и куда метишь. Так что делай всё сам, а я побежала, пока мои ещё чего не испортили."
     with dissolve
@@ -433,7 +467,7 @@ label SofiaTask:
     play sound gameZone
     mainСharacterr "Ну вот другое дело, у меня явно получилось исправить тот кошмар."
     show WebSofiaSurprise at right
-    Sofia "Ого, ты сам это сделал?! Это просто снос головы, ты реально гений. Сейчас я напишу мэру и можешь идти в главный офис."
+    Sofia "Ого, ты сам это сделал?! Это просто снос бошки, ты реально гений. Сейчас я напишу мэру и можешь идти в главный офис."
     hide WebSofiaSurprise
     show WebSofiaWithPhone at right
     Sofia "{w=2}Всё, можешь идти он будет ждать тебя у входа в офис."
@@ -444,9 +478,9 @@ label Ending:
     with fade
     scene mainBuilding
     show mayorWithHand at right
-    MrMayor "Приветствую тебя наш юный гений. Очень много слышал о твои результатах."
+    MrMayor "Приветствую тебя, наш юный гений! Очень много слышал о твои результатах."
     mainСharacterr "Спасибо большое. Я очень старался, особенно после того как узнал, что можно попасть к вам в главный офис."
-    MrMayor "Ну ты ещё не попал. Но перед тем как я расскажу, что тебе нужно сделать пошли ко мне в кабинет."
+    MrMayor "Ну ты ещё не попал. Но перед тем как я расскажу, что тебе нужно сделать, пошли ко мне в кабинет."
     with fade
     scene mayorOffice
     show mayor at right
@@ -460,12 +494,13 @@ label Ending:
     MrMayor "Не обращай внимание. Просто там выше служебный этаж лифта и прочего оборудования, видимо что-то упало просто."
     hide mayorSurprise
     show mayor at right
-    MrMayor "Ну, а также помогаем районам с их проектами, а также с их проблемами. Собственно твоя задача будет довольно проста."
+    MrMayor "Ну, а также помогаем районам с их проектами и проблемами. Собственно твоя задача будет довольно проста."
     with fade
     scene mayorTask
+    show mayor at right
     MrMayor "Видишь вон там заброшенный район?"
-    MrMayor "Тебе нужно его просто удалить не оставив ни следа от него. Я думаю ты справишься если мне не наврали о тебе. {w}
-    А я пока что уйду на обеденный перерыв, можешь садиться за мой стол и приступать к работе."
+    MrMayor "Тебе нужно его просто удалить не оставив ни следа от него. Я думаю ты справишься, если мне не наврали о тебе. {w}
+    А я пока что уйду на обеденный перерыв. Можешь садиться за мой стол и приступать к работе."
     if greenCount:
         menu:
             "Взять ключи":
@@ -479,18 +514,34 @@ label Ending:
     else:
         jump MayorsTask
     return
+
 label MayorsTask:
-    #
-    #
-    #
-    #
+
+    scene atTheTable
+    play sound sit
+    mainСharacterr "Пора приступать к заданию!"
+    scene time
+    play music writeCode
+    "какое-то время спустя..."
+    stop music fadeout 1
+    play music musicNormal
+    scene completeTask
+    show mayor at right
     MrMayor "Ооо, я смотрю ты уже сделал моё задание!"
-    MrMayor "Поздравляю, теперь ты принят к нам на работу!"
+    MrMayor "Поздравляю! Теперь ты часть нашей команды!"
     return
+
 label GoToPrisoner:
-    #picture
-    mainСharacterr "Ты тот, кто знает как можно выбраться отсюда?"
-    show prisoner
+    with fade
+    scene Ladder
+    play music walkToNextFloor
+    "{w=1}"
+    stop music fadeout 1
+    play music musicNormal
+    with fade
+    scene Jail
+    mainСharacterr "Ты тот, кто знает, как можно выбраться отсюда?"
+
     AreaPrisoner "Что!? Ты настоящий человек?! Господи, я не видел живой души уже несколько лет. Да, я знаю как можно выбраться из этого мира,
     за это меня и держат в заточении."
     AreaPrisoner "Чтобы выбраться из этого мира также как и во всём тут нужно использовать Python, есть функция под названием ComeBackToReal,
@@ -504,8 +555,12 @@ label GoToPrisoner:
 
 label SafePrisoner:
     mainСharacterr "Я взял какую-то связку ключей. Сейчас попробую."
-    play sound getKey
-    #картинка
+    play music FreePrisoner
+    with dissolve
+    scene WithoutHandcuffs
+    stop music fadeout 1
+    play music musicNormal
+    show Prisoner at right
     AreaPrisoner "Спасибо тебе большое, а теперь нужно как можно быстрее вызвать эту функцию."
     if oldArea:
         jump SafeAnother
@@ -515,16 +570,28 @@ label SafePrisoner:
 
 label Safe:
     mainСharacterr "Мэра сейчас нет в своём офисе, скорее бежим туда пока он не вернулся!"
-    AreaPrisoner "Всё, готово. Наконец-то спустя столько лет я увижу реальный мир!! Спасибо тебе [mainPerson]"
-    #picture
+    with fade
+    scene MainHeroWithPrisoner
+    AreaPrisoner "Всё, готово. Наконец-то спустя столько лет я увижу реальный мир!!"
+    play sound portal
+    with dissolve
+    scene Portal
+    extend "Спасибо тебе [mainPerson]!"
+    with dissolve
+    scene EmptyOffice
+    MrMayor "Вот чёрт, не успел..."
     return
 
 label SafeAnother:
-    mainСharacterr "Я не могу просто так уйти, в заброшенном районе есть люди как мs, и я обещал спасти их."
-    AreaPrisoner "Дело твоё, беги и спасай их. А я после стольких лет заключения лучше точно спасусь сам."
-    #picture
+    mainСharacterr "Я не могу просто так уйти. В заброшенном районе есть люди как мы, и я обещал спасти их."
+    AreaPrisoner "Дело твоё, беги и спасай их. А я, после стольких лет заключения, лучше точно спасусь сам."
+    with fade
+    scene SaveFromHouse
     mainСharacterr "Я НАШЁЛ! Я нашёл способ спастись, скорее все ко мне!"
-    #picture
+    play sound portal
+    with dissolve
+    scene SaveWithPeople
+    play music musicNormal
     jump Teleport
     return
 
@@ -537,6 +604,8 @@ label Teleport:
     return
 
 label DontSafePrisoner:
+    with fade
+    scene Jail
     mainСharacterr "Прости, но я не знаю как тебе помочь..."
     AreaPrisoner "Эх, жаль... {w} Ну тогда скорее беги отсюда и не смей возвращаться спасать меня, иначе и тебя могут поймать"
     mainСharacterr "Хорошо, я понял тебя, спасибо тебе большое. Прости, что никак не могу спасти тебя..."
@@ -547,16 +616,25 @@ label DontSafePrisoner:
     return
 
 label GoToSafeAnother:
-    #picture
+    with fade
+    scene SaveFromHouse
     mainСharacterr "Я НАШЁЛ! Я нашёл способ спастись, скорее все ко мне!"
-    #picture
+    play sound portal
+    with dissolve
+    scene SaveWithPeople
+    play music musicNormal
     jump Teleport
     return
 
 label GoToSafe:
-    #picture
-    #picture
-    #picture
-    #picture
+    "{w=1}"
+    scene SaveSolo
+    "{w=1}"
+    play sound portal
+    scene teleport
+    "{w=1}"
+    scene EmptyOffice
+    MrMayor "Вот чёрт, не успел..."
     jump Teleport
+
     return

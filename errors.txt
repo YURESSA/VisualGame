@@ -2,9 +2,9 @@
 errors listed below, and try again.
 
 
-File "game/script.rpy", line 117: end of line expected.
-    mainСharacterr"Вау, что это? Объясни, пожалуйста, поподробнее.":
-                                                                   ^
+File "game/script.rpy", line 441: expected statement.
+    zxcvbnm,./returntyuiop[]\
+           ^
 
 Ren'Py Version: Ren'Py 8.1.3.23091805
-Fri Nov 24 17:33:03 2023
+Wed Dec 13 14:10:56 2023
