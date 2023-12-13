@@ -1,6 +1,6 @@
 ## Black Swan
 
-[Последний релиз](https://disk.yandex.ru/d/TjxcnKp9dqeN9w)
+[Последний релиз](https://disk.yandex.ru/d/DUn9YAaooeXUoQ)
 
 ### Визуальная новелла
 
