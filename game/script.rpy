@@ -102,6 +102,7 @@ image MainHeroWithPrisoner = "PrisonerTasks/MainHeroWithPrisoner.png"
 
 #Ending
 image end = "ending/end.png"
+image black = "ending/black.jpg"
 
 define greenCount = 0
 define oldArea = 0
@@ -583,7 +584,7 @@ label SafePrisoner:
     with dissolve
     scene WithoutHandcuffs
     stop music fadeout 1
-    play music musicNormal
+    play music redRoom
     show Prisoner at right
     AreaPrisoner "Спасибо тебе большое, а теперь нужно как можно быстрее вызвать эту функцию."
     if oldArea:
@@ -623,23 +624,28 @@ label SafeAnother:
     pause 1
     scene MainHeroWithPrisoner
     stop music fadeout 1
-    play music musicNormal
+    play music redRoom
     scene SaveFromHouse
     mainСharacterr "Я НАШЁЛ! {w=1}Я нашёл способ спастись, скорее все ко мне!"
     play sound portal
     with dissolve
     scene SaveWithPeople
     pause 3
-    play music musicNormal
+    play music redRoom
     jump Teleport
     return
 
 label Teleport:
+    play music musicNormal
     play sound sleep
+    scene black
+    pause 0.5
+    with dissolve
     scene end
-    mainСharacterr "Да уж, вот это сон. Надо наверное и вправду поступать туда где учат Python разработчиков,
-     ведь всё правда как во сне, на питоне можно многое реализовывать, а главное он легче чем многие другие языки."
-    mainСharacterr "Надо будет запомнить, вдруг когда я поступлю надо будет сделать визуальную новеллу. А у меня уже готовый сюжет будет."
+    mainСharacterr "Да уж, вот это сон."
+    mainСharacterr "Надо наверное и вправду поступать туда где учат Python разработчиков, {w}
+    ведь всё правда как во сне, на питоне можно многое реализовывать, а главное он намного легче других языков."
+    mainСharacterr "Надо будет запомнить этот сон,{w} вдруг когда я поступлю надо будет сделать визуальную новеллу. А у меня уже готовый сюжет будет!"
     jump Titles
     return
 
@@ -668,7 +674,7 @@ label GoToSafeAnother:
     with dissolve
     scene MainHeroWithPrisoner
     stop music fadeout 1
-    play music musicNormal
+    play music redRoom
     scene SaveFromHouse
     mainСharacterr "Я НАШЁЛ! {w=1} Я нашёл способ спастись, скорее все ко мне!"
     play sound portal
