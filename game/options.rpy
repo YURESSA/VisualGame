@@ -30,6 +30,9 @@ define config.version = "1.0"
 ## Для отделения абзацев оставляйте между ними пустую строку.
 
 define gui.about = _p("""
+Спасибо вам за скачивание нашей игры))
+
+Авторы - команда Black Swan
 """)
 
 
@@ -37,7 +40,7 @@ define gui.about = _p("""
 ## постройке дистрибутивов. Оно должно содержать текст формата ASCII и не должно
 ## содержать пробелы, двоеточия и точки с запятой.
 
-define build.name = "Uncharted: Python developer"
+define build.name = "UnchartedPythonDeveloper"
 
 
 ## Звуки и музыка ##############################################################
@@ -144,7 +147,7 @@ default preferences.afm_time = 15
 ## Этот параметр обычно не должен изменяться, а если и изменился, должен быть
 ## текстовой строчкой, а не выражением.
 
-define config.save_directory = "firstVersion-1699367504"
+define config.save_directory = "UnchartedPythonDeveloper"
 
 
 ## Иконка ######################################################################
